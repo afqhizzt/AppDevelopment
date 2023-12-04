@@ -1,1 +1,229 @@
+import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ProfilePage(),
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Eventory'),
+        backgroundColor: Colors.black,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Handle the "Edit" button press in the app bar
+                // You can add code here to perform actions on edit
+              },
+              child: Text(
+                '',
+                style: TextStyle(color: Colors.red),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.transparent,
+                elevation: 0,
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: constraints.maxWidth * 0.15,
+                        backgroundImage: AssetImage('image/spon.webp'),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'LEE MIN HO',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                  color: Colors.black,
+                  height: 30, // Adjust the height of the black bar
+                ),
+
+                SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _buildRowWithLogo('image/matric.png', 'B22ECXXXX'),
+                        _buildRowWithLogo('image/study.png', 'Computing'),
+                        _buildRowWithLogo('image/faculty.png', 'Bachelor of Mechanical Engineering (Pure)'),
+                        _buildRowWithLogo('image/year.png', '3SEMBH'),
+                        _buildRowWithLogo('image/email.png', 'Official Email', subTitle: 'abc123@graduate.utm.my'),
+                        _buildRowWithLogo('image/email.png', 'Secondary Email', subTitle: 'abc123@mail.com'),
+                        _buildRowWithLogo('image/phone.png', '012-3456789', isEditable: true),
+                        SizedBox(height: 5),
+                      ],
+                    ),
+                  ),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(
+                    3, // Number of pictures in the row
+                    (index) => Container(
+                      width: constraints.maxWidth * 0.28,
+                      height: constraints.maxWidth * 0.28,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('images/post_$index.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Bottom Navigation Bar
+                BottomNavigationBar(
+                  showSelectedLabels: true,
+                  showUnselectedLabels: true,
+                  backgroundColor: Colors.black,
+                  unselectedItemColor: Colors.black,
+                  selectedItemColor: Colors.black,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home, size: 24),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.search, size: 24),
+                      label: 'Search',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.qr_code_scanner, size: 24),
+                      label: 'Scan',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.notifications, size: 24),
+                      label: 'Notification',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person, size: 24),
+                      label: 'Profile',
+                    ),
+                  ],
+                  onTap: (int index) {
+                    // Handle navigation based on the index
+                    switch (index) {
+                      case 0:
+                        // Handle the "Home" button press
+                        break;
+                      case 1:
+                        // Handle the "Search" button press
+                        break;
+                      case 2:
+                        // Handle the "Scan" button press
+                        break;
+                      case 3:
+                        // Handle the "Notification" button press
+                        break;
+                      case 4:
+                        // Handle the "Profile" button press
+                        break;
+                    }
+                  },
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRowWithLogo(String logoPath, String title, {String subTitle = '', bool isEditable = false}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center, // Center-align the content
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Image.asset(
+              logoPath,
+              width: 24, // Adjust the width as needed
+              height: 24, // Adjust the height as needed
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center, // Center-align the text
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18, // Increase the font size
+                  color: Colors.grey,
+                ),
+                textAlign: TextAlign.center, // Center-align the text
+              ),
+              if (subTitle.isNotEmpty)
+                Text(
+                  subTitle,
+                  style: TextStyle(
+                    fontSize: 18, // Increase the font size
+                    color: Colors.grey,
+                  ),
+                  textAlign: TextAlign.center, // Center-align the text
+                ),
+            ],
+          ),
+        ],
+      ),
+      if (isEditable) // Display "Edit" button only if isEditable is true
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TextButton(
+              onPressed: () {
+                // Handle the "Edit" button press
+                // You can add code here to perform actions on edit
+              },
+              child: Text(
+                'Edit',
+                style: TextStyle(fontSize: 18, color: Colors.red), // Increase the font size
+              ),
+            ),
+          ),
+        ),
+    ],
+  );
+}
+
+}
